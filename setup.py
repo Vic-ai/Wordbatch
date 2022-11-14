@@ -13,7 +13,7 @@ else:
 
 setup(
 	name='Wordbatch',
-	version='1.4.9',
+	version='1.4.10',
 	description='Python library for distributed AI processing pipelines, using swappable scheduler backends',
 	url='https://github.com/anttttti/Wordbatch',
 	author='Antti Puurula',
