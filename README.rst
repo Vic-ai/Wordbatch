@@ -22,7 +22,7 @@ can be developed based on the available classes.
 
 Requirements
 ============
-Linux / Windows / macOS. Python 3.6 / 3.7
+Linux / Windows / macOS. Python 3.8 - 3.11
 
 Installation
 ============
