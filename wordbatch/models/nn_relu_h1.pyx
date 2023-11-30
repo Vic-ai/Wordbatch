@@ -187,7 +187,8 @@ cdef class NN_ReLU_H1:
 				if sample_weight is not None:
 					e*= sample_weight[row]
 				update_single(inds, vals, lenn, D, D_nn, e, alpha, L2, w0, w1, z, c0, c1, threads)
-			if self.verbose > 0:  print "Total e:", e_total
+			if self.verbose > 0:
+				print(f"Total e: {e_total}")
 		return self
 
 	def predict_layer(self, X, int layer, int threads= 0):

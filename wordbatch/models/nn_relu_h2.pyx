@@ -204,7 +204,8 @@ cdef class NN_ReLU_H2:
 					if e>0:  e= e_clip
 					else:  e= -e_clip
 				update_single(inds, vals, lenn, D, D_nn, D_nn2, e, alpha, L2, w0, w1, w2, z1, z2, c0, c1, c2, threads)
-			if self.verbose > 0:  print "Total e:", e_total
+			if self.verbose > 0:
+				print(f"Total e: {e_total}")
 		return self
 
 	def predict_layer(self, X, int layer, int threads= 0):
