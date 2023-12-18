@@ -3,16 +3,15 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python>=3.7.3
-  - numpy==1.20.3
-  - cython==0.29.10
+  - python>=3.8.13, <3.12
   - pip
-#  - nltk>=3.4.3
-#  - textblob
+  - nltk>=3.4.3
   - pip:
-    - wordbatch==1.4.8
-#  - keras==2.3.1
-#  - pyspark==2.4.0
-#  - dask>=2.1.0
-#  - distributed>=2.1.0
+    - cython==0.29.20
+    - keras==2.3.1
+    - pyspark==2.4.0
+    - dask>=2.1.0
+    - distributed>=2.1.0
+    - textblob==0.17.1
+    - numpy==1.23.2
 prefix: /opt/conda

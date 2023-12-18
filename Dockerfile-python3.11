@@ -1,0 +1,16 @@
+# This is a Dockerfile to create an environment for the creation of Wordbatch wheel with Python 3.11
+# It contains the cython version compatible with Python 3.11
+# You can build your wheel with `python setup.py sdist bdist_wheel` from inside the docker container
+
+
+FROM python:3.11.6-slim-bookworm as base
+
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc g++
+
+RUN pip install -U wheel setuptools
+
+RUN pip install -U cython==3.0.6 keras==2.3.1 pyspark==2.4.0 dask>=2.1.0 distributed>=2.1.0 nltk>=3.4.3 textblob==0.17.1 numpy==1.23.2
+
+COPY . /
+
+RUN python setup.py clean

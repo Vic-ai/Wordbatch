@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-from setuptools import setup, Extension
-from Cython.Distutils import build_ext
-import numpy
 import os
+
+import numpy
+from Cython.Distutils import build_ext
+from setuptools import Extension, setup
 
 if os.name == 'nt':
 	extra_compile_args = ["/openmp", "/Ox", "/arch:AVX2", "/fp:fast"]
@@ -13,7 +14,7 @@ else:
 
 setup(
 	name='Wordbatch',
-	version='1.4.10',
+	version='2.0.0.dev0',
 	description='Python library for distributed AI processing pipelines, using swappable scheduler backends',
 	url='https://github.com/anttttti/Wordbatch',
 	author='Antti Puurula',
@@ -34,6 +35,7 @@ setup(
 		"Programming Language :: Python :: 3.8",
 		"Programming Language :: Python :: 3.9",
 		"Programming Language :: Python :: 3.10",
+		"Programming Language :: Python :: 3.11",
 		"Programming Language :: Cython",
 		"Topic :: Scientific/Engineering :: Artificial Intelligence",
 		"Topic :: Software Development :: Libraries :: Python Modules",

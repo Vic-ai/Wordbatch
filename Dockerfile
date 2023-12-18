@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.7.12 as builder
+FROM continuumio/miniconda3:23.3.1-0 as builder
 
 WORKDIR /app
 

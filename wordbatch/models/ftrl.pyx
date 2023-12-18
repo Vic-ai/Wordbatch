@@ -206,7 +206,8 @@ cdef class FTRL:
 				if sample_weight is not None:
 					e*= sample_weight[row]
 				update_single(inds, vals, lenn, e, ialpha, w, z, n, bias_term, threads)
-			if self.verbose > 0:  print "Total e:", e_total
+			if self.verbose > 0:
+				print(f"Total e: {e_total}")
 		return self
 
 	def finalize_model(self):

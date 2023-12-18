@@ -280,7 +280,8 @@ cdef class FM_FTRL:
 					update_single(inds, vals, lenn, e, ialpha, w, z, n, alpha_fm, L2_fm, w_fm, z_fm, n_fm, D_fm,
 								  bias_term, threads)
 
-			if self.verbose>0:  print "Total e:", e_total
+			if self.verbose > 0:
+				print(f"Total e: {e_total}")
 		return self
 
 	def __getstate__(self):
