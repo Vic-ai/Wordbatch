@@ -1,3 +1,6 @@
+Updating pipy wheel https://app.getguru.com/card/T7AdeyMc/Update-wheels-for-Wordbatch
+
+
 ===============
 Wordbatch 1.4.10
 ===============
