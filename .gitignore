@@ -125,3 +125,16 @@ dmypy.json
 
 # Other 
 data/tripadvisor/json/*
+
+# PyPI credentials
+.pypi.env
+
+# macOS
+.DS_Store
+
+# Cython generated C files (regenerated during build)
+wordbatch/**/*.c
+!wordbatch/models/avx_ext.c
+
+# asdf version manager
+.tool-versions

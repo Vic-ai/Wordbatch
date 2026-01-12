@@ -9,9 +9,13 @@ from cython.parallel import prange
 from libc.math cimport exp, log, fmax, fmin, sqrt, fabs
 import multiprocessing
 import sys
+import platform
 import randomgen
 
 np.import_array()
+
+# Auto-detect if AVX2 is available (not on ARM)
+_is_x86 = platform.machine() in ('x86_64', 'AMD64', 'i386', 'i686')
 
 cdef extern from "avx_ext.h":# nogil:
 	void update_fm_ftrl_avx(const int* inds, double* vals, int lenn, const double e, double ialpha, double* w,
@@ -134,7 +138,7 @@ cdef class FM_FTRL:
 				 inv_link= "identity",
 				 bint bias_term=1,
 				 int threads= 0,
-				 int use_avx=1,
+				 int use_avx=-1,  # -1 = auto-detect (enabled on x86, disabled on ARM)
 				 int seed= 0,
 				 int verbose=1):
 
@@ -156,6 +160,9 @@ cdef class FM_FTRL:
 		if inv_link=="sigmoid":  self.inv_link= 1
 		if inv_link=="identity":  self.inv_link= 0
 		self.bias_term= bias_term
+		# Auto-detect AVX support: enable on x86, disable on ARM
+		if use_avx == -1:
+			use_avx = 1 if _is_x86 else 0
 		self.use_avx = use_avx
 		self.seed = seed
 		self.verbose= verbose

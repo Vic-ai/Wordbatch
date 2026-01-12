@@ -130,7 +130,7 @@ cdef class NN_ReLU_H2:
 		rand= np.random.Generator(randomgen.xoroshiro128.Xoroshiro128(seed= self.seed))
 		self.w0 = (rand.random((D + 1) * D_nn) - 0.5) * init_nn
 		self.w1 = (rand.random((D_nn + 1) * D_nn2) - 0.3) * init_nn
-		self.w2 = (rand.rand(D_nn2 + 1) - 0.5) * init_nn
+		self.w2 = (rand.random(D_nn2 + 1) - 0.5) * init_nn
 		self.z1= np.zeros((D_nn,), dtype=np.float64)
 		self.z2= np.zeros((D_nn2,), dtype=np.float64)
 		self.c0= np.zeros((D,), dtype=np.float64)
@@ -199,7 +199,7 @@ cdef class NN_ReLU_H2:
 							  self.inv_link) -ys[row]
 				abs_e= fabs(e)
 				e_total+= abs_e
-				e += (rand.rand() - 0.5) * e_noise
+				e += (rand.random() - 0.5) * e_noise
 				if abs_e> e_clip:
 					if e>0:  e= e_clip
 					else:  e= -e_clip

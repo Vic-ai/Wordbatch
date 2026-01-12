@@ -11,7 +11,7 @@ import scipy.sparse as ssp
 import scipy as sp
 import numpy as np
 import gzip
-import lz4framed
+import lz4.frame
 import array
 from wordbatch.data_utils import indlist2csrmatrix
 from cpython cimport array
@@ -31,10 +31,10 @@ cpdef np.int32_t murmurhash3_bytes_s32(bytes key, unsigned int seed= 0):
 	return out
 
 def save_to_lz4(file, input, dtype, level= 0):
-	with open(file, 'wb') as f:  f.write(lz4framed.compress(np.array(input, dtype=dtype).tostring(), level))
+	with open(file, 'wb') as f:  f.write(lz4.frame.compress(np.array(input, dtype=dtype).tobytes(), compression_level=level))
 
 def load_from_lz4(file, dtype):
-	with open(file, 'rb') as f:  input= np.fromstring(lz4framed.decompress(f.read()), dtype=dtype)
+	with open(file, 'rb') as f:  input= np.frombuffer(lz4.frame.decompress(f.read()), dtype=dtype)
 	return input
 
 def csr_to_lz4(file, features):

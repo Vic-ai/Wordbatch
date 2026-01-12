@@ -1,6 +1,10 @@
 #include "avx_ext.h"
 
+// Detect architecture - disable AVX2 on ARM
+#if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
 #define USE_AVX2
+#endif
+
 #define USE_OMP
 
 #ifdef USE_OMP
@@ -8,9 +12,7 @@
 #endif
 
 #ifdef USE_AVX2
-
 #include <immintrin.h>
-
 #endif
 
 //#include <malloc.h> //Deprecated
