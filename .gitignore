@@ -125,3 +125,9 @@ dmypy.json
 
 # Other 
 data/tripadvisor/json/*
+
+# PyPI credentials
+.pypi.env
+
+# macOS
+.DS_Store

@@ -1,20 +1,40 @@
 #!/usr/bin/env python
 import os
+import platform
 
 import numpy
 from Cython.Distutils import build_ext
 from setuptools import Extension, setup
 
+# Detect architecture
+is_arm = platform.machine() in ('arm64', 'aarch64')
+is_macos = platform.system() == 'Darwin'
+
 if os.name == 'nt':
 	extra_compile_args = ["/openmp", "/Ox", "/arch:AVX2", "/fp:fast"]
 	extra_link_args = []
+elif is_arm:
+	# ARM architecture (Apple Silicon, etc.) - no AVX2, use NEON-friendly flags
+	# Note: don't use -std=gnu11 as MurmurHash3.cpp is C++
+	extra_compile_args = ["-O3", "-ffast-math", "-ftree-vectorize"]
+	extra_link_args = []
+	if is_macos:
+		# macOS with Homebrew's libomp
+		extra_compile_args += ["-Xpreprocessor", "-fopenmp"]
+		extra_link_args += ["-lomp"]
 else:
-	extra_compile_args = ["-O3", "-fopenmp", "-ffast-math", "-mavx2", "-ftree-vectorize", "-std=gnu11"]
+	# x86_64 Linux/macOS
+	# Note: don't use -std=gnu11 as MurmurHash3.cpp is C++
+	extra_compile_args = ["-O3", "-fopenmp", "-ffast-math", "-mavx2", "-ftree-vectorize"]
 	extra_link_args = ["-fopenmp"]
+	if is_macos:
+		# macOS x86 with Homebrew's libomp
+		extra_compile_args = ["-O3", "-Xpreprocessor", "-fopenmp", "-ffast-math", "-mavx2", "-ftree-vectorize"]
+		extra_link_args = ["-lomp"]
 
 setup(
 	name='Wordbatch',
-	version='2.0.0.dev0',
+	version='2.1.0',
 	description='Python library for distributed AI processing pipelines, using swappable scheduler backends',
 	url='https://github.com/anttttti/Wordbatch',
 	author='Antti Puurula',
@@ -40,8 +60,8 @@ setup(
 		"Topic :: Scientific/Engineering :: Artificial Intelligence",
 		"Topic :: Software Development :: Libraries :: Python Modules",
 	],
-	install_requires=['Cython', 'scikit-learn', 'python-Levenshtein', 'py-lz4framed', 'randomgen==1.21.2', 'numpy',
-					  'scipy', 'pandas', 'wheel>=0.33.4'],
+	install_requires=['Cython>=0.29.20', 'scikit-learn', 'python-Levenshtein', 'lz4', 'randomgen==1.21.2',
+					  'numpy>=1.23.2,<2.0', 'scipy>=1.9.0,<2.0', 'pandas>=1.5.0,<3.0', 'wheel>=0.33.4'],
 	extras_require={'dev': ['nltk', 'textblob', 'keras', 'pyspark', 'dask', 'distributed', 'ray']},
 
 	cmdclass= {'build_ext': build_ext},
