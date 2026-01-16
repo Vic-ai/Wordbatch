@@ -119,7 +119,10 @@ cdef class NN_ReLU_H1:
 		if threads==0:  threads= self.threads
 		if type(X) != ssp.csr.csr_matrix:  X= ssp.csr_matrix(X, dtype=np.float64)
 		if X.shape[1] != self.D:
-			print("Dimension mismatch! self.D=", self.D, "X.shape[1]=", X.shape[1])
+			raise ValueError(
+				f"Dimension mismatch in NN_ReLU_H1.predict: model expects {self.D} features, "
+				f"but input has {X.shape[1]} features"
+			)
 		return self.predict_f(X.data, X.indices, X.indptr, threads)
 
 	def predict_f(self, np.ndarray[double, ndim=1, mode='c'] X_data,
@@ -148,7 +151,10 @@ cdef class NN_ReLU_H1:
 			self.D= X.shape[1]
 			self.reset()
 		elif X.shape[1] != self.D:
-			print("Dimension mismatch! self.D=", self.D, "X.shape[1]=", X.shape[1])
+			raise ValueError(
+				f"Dimension mismatch in NN_ReLU_H1.fit: model expects {self.D} features, "
+				f"but input has {X.shape[1]} features"
+			)
 		if type(y) != np.array:  y = np.array(y, dtype=np.float64)
 		# self.fit_f(X, np.ascontiguousarray(X.data), np.ascontiguousarray(X.indices),
 		#           np.ascontiguousarray(X.indptr), y, threads)

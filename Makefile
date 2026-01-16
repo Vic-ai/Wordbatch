@@ -45,6 +45,7 @@ stop: ## Stop and remove a running container
 	docker stop $(CONTAINER_NAME); docker rm $(CONTAINER_NAME)
 
 test:
+	pytest
 	docker start $(CONTAINER_NAME)
 	docker exec -it $(CONTAINER_NAME)  env | grep PATH
 	docker exec -it $(CONTAINER_NAME)  which python
