@@ -62,7 +62,7 @@ setup(
 	],
 	install_requires=['Cython>=0.29.20', 'scikit-learn', 'python-Levenshtein', 'lz4', 'randomgen==1.21.2',
 					  'numpy>=1.23.2,<2.0', 'scipy>=1.9.0,<2.0', 'pandas>=1.5.0,<3.0', 'wheel>=0.33.4'],
-	extras_require={'dev': ['nltk', 'textblob', 'keras', 'pyspark', 'dask', 'distributed', 'ray']},
+	extras_require={'dev': ['nltk', 'textblob', 'keras', 'pyspark', 'dask', 'distributed', 'ray', 'pytest']},
 
 	cmdclass= {'build_ext': build_ext},
 	ext_modules= [
